@@ -29,7 +29,9 @@ const User = sequelize.define('User', {
       },
       interest: {
         type: DataTypes.JSON,
-        // MySQL 5.7 이상에서 JSON 타입 지원
+      },
+      hobby: {
+        type: DataTypes.JSON,
       },
       timetable: {
         type: DataTypes.JSON,
