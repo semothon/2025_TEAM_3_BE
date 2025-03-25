@@ -8,7 +8,7 @@ exports.Discover = async(req, res) =>{
             groups = await Groups.findAll();
         }else{
             groups = await Groups.findAll({
-                where : {category}
+                where : {category},
             });
         }
         

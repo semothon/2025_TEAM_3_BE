@@ -3,6 +3,7 @@ const Groups = require('../models/Groups');
 
 exports.Search = async (req, res) => {
   const {
+    keyword = '',
     category = 'all',
     field = 'all',
     attendance = 'all',
@@ -37,6 +38,11 @@ exports.Search = async (req, res) => {
       filter[key] = Array.isArray(val) ? { [Op.in]: val } : val;
     }
   });
+
+  const keywordPorcessed = keyword.trim();
+  if(keywordPorcessed){
+    filter.title = {[Op.like]: `%${keywordPorcessed}%`};
+  }
 
   try {
     const groups = await Groups.findAll({
