@@ -1,17 +1,11 @@
 const Groups = require('../models/Groups');
+const buildGroupFilter = require('../utils/buildGroupFilter');
 
 exports.Discover = async(req, res) =>{
-    const category = req.query.category || 'all';
     try{
-        let groups;
-        if(category === 'all'){
-            groups = await Groups.findAll();
-        }else{
-            groups = await Groups.findAll({
-                where : {category},
-            });
-        }
-        
+        const where = buildGroupFilter(req.query);
+        const groups = await Groups.findAll({ where });
+
         res.status(200).json({groups});
     }catch(err){
         console.error(err);
