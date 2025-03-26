@@ -7,6 +7,10 @@ const User = sequelize.define('User', {
         primaryKey: true,
         autoIncrement: true,
       },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       email: {
         type: DataTypes.STRING,
         unique: true,
@@ -45,7 +49,7 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.NOW,
       },
 }, {
-    tableName: 'user',
+    tableName: 'users',
     timeStamps: false,
 
 });
