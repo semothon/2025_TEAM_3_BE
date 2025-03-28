@@ -3,7 +3,28 @@ const GroupMembers = require('../models/GroupMembers');
 
 exports.groupDetail = async (req, res) => {
   try {
-    
+    const groupId = req.params.groupId;
+    const group = await Groups.findByPk(groupId, {
+      attributes: [
+        'title',
+        'approve',
+        'meet',
+        'attendance',
+        'max_members',
+        'num_members',
+        'onelineDescription',
+        'description',
+        'memo',
+        'thumbnail'
+      ]
+    });
+
+    if(!group){
+      return res.status(404).json({ message: "그룹을 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({ group });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "server err" });
