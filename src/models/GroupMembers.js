@@ -11,7 +11,7 @@ const GroupMember = sequelize.define('GroupMember', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'users', // 실제 users 테이블 이름
+      model: 'users', 
       key: 'id',
     }
   },
@@ -19,7 +19,7 @@ const GroupMember = sequelize.define('GroupMember', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'groups', // 실제 groups 테이블 이름
+      model: 'groups', 
       key: 'id',
     }
   },

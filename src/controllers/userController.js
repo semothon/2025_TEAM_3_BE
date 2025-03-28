@@ -44,7 +44,7 @@ exports.registerExtra = async (req, res) => {
   try {
     // 1단계에서 생성된 userId를 클라이언트가 보내준다고 가정
     const { userId } = req.params;
-    const { hobby, interest, department } = req.body;
+    const { hobby, interest, department, timetable } = req.body;
 
     const updatedUser = await userService.updateUserExtra(userId, {
       hobby,

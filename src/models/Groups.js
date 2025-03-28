@@ -70,6 +70,9 @@ const Group = sequelize.define('Group', {
   memo: {
     type: DataTypes.TEXT,
   },
+  major: {
+    type: DataTypes.STRING,
+  },
 }, {
   tableName: 'groups',
   timestamps: false,

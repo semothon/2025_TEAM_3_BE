@@ -1,4 +1,5 @@
 const Groups = require('../models/Groups');
+const GroupMembers = require('../models/GroupMembers');
 
 exports.groupDetail = async (req, res) => {
   try {
@@ -17,7 +18,8 @@ exports.createGroup = async (req, res) => {
       goal, 
       description, 
       category, 
-      is_public, 
+      is_public,
+      major,
       field, 
       attendance, 
       meet, 
@@ -32,7 +34,7 @@ exports.createGroup = async (req, res) => {
 
     const thumbnail = req.body.thumbnail || '';
 
-    const newGroup = await Group.create({
+    const newGroup = await Groups.create({
       title,
       max_members,
       goal,
@@ -40,6 +42,7 @@ exports.createGroup = async (req, res) => {
       category,
       is_public,
       field,
+      major,
       attendance,
       meet,
       mood,
@@ -49,12 +52,20 @@ exports.createGroup = async (req, res) => {
       num_members: 1,
     });
 
+    await GroupMembers.create({
+      user_id: leader_id,
+      group_id: newGroup.id,
+      role: 'leader',
+      status: 'accepted',
+      joined_at: new Date(),
+    });
+
     res.status(201).json({ message: "그룹 생성", group: newGroup});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "서버 에러"});
   }
-}
+};
 
 exports.getSharedRecords = async (req, res) => {
   try{

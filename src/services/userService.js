@@ -26,7 +26,7 @@ exports.createUserBasic = async ({ name, email, password, login_id }) => {
 };
 
 
-exports.updateUserExtra = async (userId, { hobby, interest, department }) => {
+exports.updateUserExtra = async (userId, { hobby, interest, department, timetable }) => {
   const user = await User.findByPk(userId);
   if (!user) {
     throw new Error('사용자를 찾을 수 없습니다.');

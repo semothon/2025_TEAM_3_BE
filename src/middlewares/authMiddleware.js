@@ -15,19 +15,18 @@ const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ error: '유효한 토큰이 아닙니다.' });
     }
 
-    // JWT 토큰 검증
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 토큰에 포함된 사용자 id로 DB에서 사용자 조회
+  
     const user = await User.findOne({ where: { id: decoded.id } });
     if (!user) {
       return res.status(401).json({ error: '사용자를 찾을 수 없습니다.' });
     }
 
-    // 사용자 정보를 req.user에 저장
+    
     req.user = user;
 
-    // 다음 미들웨어나 라우트 핸들러로 제어 전달
+    
     next();
   } catch (error) {
     console.error('인증 미들웨어 오류:', error);
