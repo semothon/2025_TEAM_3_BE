@@ -5,6 +5,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const discoverRoutes = require('./src/routes/discoverRoutes');
 const searchRoutes = require('./src/routes/searchRoutes');
 const groupRoutes = require('./src/routes/groupRoutes');
+const homeRoutes = require('./routes/homeRoutes');
 const port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.use('/api', userRoutes);
 app.use('/api', discoverRoutes);
 app.use('/api', searchRoutes);
 app.use('/api/groups', groupRoutes);
+app.use('/api/home', homeRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
