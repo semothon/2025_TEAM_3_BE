@@ -88,18 +88,5 @@ exports.createGroup = async (req, res) => {
   }
 };
 
-exports.getSharedRecords = async (req, res) => {
-  try{
 
-  }catch (err) {
 
-  }
-}
-
-exports.getPersonalRecords = async (req,res) => {
-  try{
-
-  }catch (err){
-
-  }
-}
