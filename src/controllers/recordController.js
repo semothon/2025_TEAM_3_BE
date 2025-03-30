@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const Records = require('../models/Records');
 
 exports.createRecords = async (req,res) => {
@@ -74,7 +75,10 @@ exports.getSharedRecords = async (req, res) => {
   exports.showRecords = async (req, res) => {
     try{
       const groupId = req.params.groupID;
-      const record = await Records.findByPk(groupId, {
+      const record = await Records.findAll(groupId, {
+        where: {
+          group_id:groupId
+        },
         attributes: [
           'title',
           'is_public',
@@ -85,7 +89,7 @@ exports.getSharedRecords = async (req, res) => {
         ]
       });
 
-      if(!record){
+      if(!record || record.length() == 0){
         return res.status(404).json({ message: "기록을 찾을 수 없습니다." });
       }
   
