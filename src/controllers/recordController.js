@@ -1,4 +1,3 @@
-const { Op } = require('sequelize');
 const Records = require('../models/Records');
 
 exports.createRecords = async (req,res) => {
@@ -68,6 +67,31 @@ exports.getSharedRecords = async (req, res) => {
         res.status(200).json({ personalRecords });
     }catch (err){
         console.error(err);
+        res.status(500).json({ message: "서버 에러" });
+    }
+  }
+  
+  exports.showRecords = async (req, res) => {
+    try{
+      const groupId = req.params.groupID;
+      const record = await Records.findByPk(groupId, {
+        attributes: [
+          'title',
+          'is_public',
+          'is_shared',
+          'content',
+          "file_url",
+          'created_at'
+        ]
+      });
+
+      if(!record){
+        return res.status(404).json({ message: "기록을 찾을 수 없습니다." });
+      }
+  
+      res.status(200).json({ record });
+    }catch(err) {
+      console.error(err);
         res.status(500).json({ message: "서버 에러" });
     }
   }
