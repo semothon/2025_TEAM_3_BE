@@ -6,6 +6,7 @@ const discoverRoutes = require('./src/routes/discoverRoutes');
 const searchRoutes = require('./src/routes/searchRoutes');
 const groupRoutes = require('./src/routes/groupRoutes');
 const friendRoutes = require('./src/routes/friendRoutes');
+const myPageRoutes = require('./src/routes/myPageRoutes');
 const port = process.env.PORT || 3034;
 
 app.use(cors());
@@ -21,6 +22,7 @@ app.use('/api', discoverRoutes);
 app.use('/api', searchRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('api/friends', friendRoutes);
+app.use('/api', myPageRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

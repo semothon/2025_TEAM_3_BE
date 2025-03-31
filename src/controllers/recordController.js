@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const Records = require('../models/Records');
 
 exports.createRecords = async (req,res) => {
