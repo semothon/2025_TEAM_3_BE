@@ -6,6 +6,7 @@ const discoverRoutes = require('./src/routes/discoverRoutes');
 const searchRoutes = require('./src/routes/searchRoutes');
 const groupRoutes = require('./src/routes/groupRoutes');
 const friendRoutes = require('./src/routes/friendRoutes');
+const recordRoutes = require('./src/routes/recordRoutes');
 const myPageRoutes = require('./src/routes/myPageRoutes');
 const port = process.env.PORT || 3034;
 
@@ -22,6 +23,7 @@ app.use('/api', discoverRoutes);
 app.use('/api', searchRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('api/friends', friendRoutes);
+app.use('api/records', recordRoutes);
 app.use('/api', myPageRoutes);
 
 app.listen(port, () => {
