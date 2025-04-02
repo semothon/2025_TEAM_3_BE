@@ -43,7 +43,7 @@ exports.getSharedRecords = async (req, res) => {
                 group_id: groupId,
                 is_shared: true
             },
-            attributes: ['title', 'content', 'file_url', 'create_at']
+            attributes: ['title', 'content', 'file_url', 'created_at']
         });
         
         res.status(200).json({ sharedRecords });
@@ -62,7 +62,7 @@ exports.getSharedRecords = async (req, res) => {
                 group_id: groupId,
                 is_shared: false
             },
-            attributes: ['title', 'content','is_public', 'file_url', 'create_at']
+            attributes: ['title', 'content','is_public', 'file_url', 'created_at']
         });
         res.status(200).json({ personalRecords });
     }catch (err){
@@ -73,7 +73,7 @@ exports.getSharedRecords = async (req, res) => {
   
   exports.showRecords = async (req, res) => {
     try{
-      const groupId = req.params.groupID;
+      const groupId = req.params.groupId;
       const record = await Records.findAll(groupId, {
         where: {
           group_id:groupId
