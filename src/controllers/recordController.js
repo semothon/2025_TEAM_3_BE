@@ -74,21 +74,21 @@ exports.getSharedRecords = async (req, res) => {
   exports.showRecords = async (req, res) => {
     try{
       const groupId = req.params.groupId;
-      const record = await Records.findAll(groupId, {
+      const record = await Records.findAll({
         where: {
-          group_id:groupId
+          group_id: groupId
         },
         attributes: [
           'title',
           'is_public',
           'is_shared',
           'content',
-          "file_url",
+          'file_url',
           'created_at'
         ]
       });
 
-      if(!record || record.length() == 0){
+      if(!record || record.length == 0){
         return res.status(404).json({ message: "기록을 찾을 수 없습니다." });
       }
   
