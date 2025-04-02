@@ -2,7 +2,7 @@ const Records = require('../models/Records');
 
 exports.createRecords = async (req,res) => {
     try{
-      const group_id = req.params.groupID;
+      const group_id = req.params.groupId;
       const {
         title,
         is_shared,
@@ -18,13 +18,13 @@ exports.createRecords = async (req,res) => {
       const file_url = req.body.file_url || '';
 
       const newRecord = await Records.create({
+        group_id,
         title,
         is_shared,
         is_public,
         content,
         user_id,
-        file_url,
-        group_id
+        file_url
       })
 
       res.status(201).json({ message: "기록 생성", record: newRecord});
