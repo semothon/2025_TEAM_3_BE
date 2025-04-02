@@ -11,6 +11,9 @@ const Group = sequelize.define('Group', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  onelineDescription: {
+    type: DataTypes.STRING,
+  },
   description: {
     type: DataTypes.TEXT,
   },
@@ -69,6 +72,9 @@ const Group = sequelize.define('Group', {
   },
   memo: {
     type: DataTypes.TEXT,
+  },
+  major: {
+    type: DataTypes.STRING,
   },
 }, {
   tableName: 'groups',

@@ -1,7 +1,8 @@
+// models/Friends.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const GroupMember = sequelize.define('GroupMember', {
+const Friends = sequelize.define('friends', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -11,34 +12,29 @@ const GroupMember = sequelize.define('GroupMember', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'users', 
+      model: 'users',
       key: 'id',
-    }
+    },
   },
-  group_id: {
+  friend_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'groups', 
+      model: 'users',
       key: 'id',
-    }
-  },
-  role: {
-    type: DataTypes.ENUM('leader', 'member'),
-    allowNull: false,
-    defaultValue: 'member',
+    },
   },
   status: {
-    type: DataTypes.ENUM('pending', 'accepted', 'rejected'),
-    allowNull: false,
+    type: DataTypes.ENUM('pending', 'accepted'),
     defaultValue: 'pending',
   },
-  joined_at: {
+  created_at: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
   },
 }, {
-  tableName: 'group_members',
+  tableName: 'friends',
   timestamps: false,
 });
 
-module.exports = GroupMember;
+module.exports = Friends;

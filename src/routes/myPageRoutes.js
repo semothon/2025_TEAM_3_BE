@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
-const discoverController = require('../controllers/discoverController')
+const myPageController = require('../controllers/myPageController');
 
-router.get('/discover', authMiddleware, discoverController.Discover);
+router.get('/mypage', authMiddleware, myPageController.myPage);
 
 module.exports = router;
