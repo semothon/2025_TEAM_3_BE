@@ -10,3 +10,5 @@ router.get('/:groupId/personalRecord', recordController.getPersonalRecords);
 router.get(':groupId/sharedRecord',recordController.getSharedRecords);
 
 router.get(':/groupId', recordController.showRecords);
+
+module.exports = router;
