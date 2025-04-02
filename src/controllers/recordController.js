@@ -73,10 +73,10 @@ exports.getSharedRecords = async (req, res) => {
   
   exports.showRecords = async (req, res) => {
     try{
-      const groupId = req.params.groupId;
-      const record = await Records.findAll({
+      const recordId = req.params.recordId;
+      const record = await Records.findOne({
         where: {
-          group_id: groupId
+          id: recordId
         },
         attributes: [
           'title',
