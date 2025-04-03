@@ -9,14 +9,12 @@ exports.createSchedule = async (req, res) => {
         memo,
         location,
       } = req.body;
-      const photo_url = req.body.photo_url || '';
       const new_schedule = await Schedules.create({
         group_id: groupId,
         title,
         start_datetime,
         memo,
-        location,
-        photo_url
+        location
       });
 
       res.status(201).json({ message: "스케줄 생성", schedule: new_schedule});

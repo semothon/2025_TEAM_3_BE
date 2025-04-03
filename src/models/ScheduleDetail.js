@@ -20,10 +20,6 @@ const ScheduleDetail = sequelize.define('ScheduleDetail', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  photo_url: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   start_datetime: {
     type: DataTypes.DATE,
     allowNull: true,
