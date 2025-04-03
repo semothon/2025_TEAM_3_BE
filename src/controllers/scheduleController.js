@@ -5,7 +5,6 @@ exports.createSchedule = async (req, res) => {
       const groupId = req.params.groupId;
       const {
         title,
-        date,
         start_datetime,
         memo,
         location,
@@ -14,7 +13,6 @@ exports.createSchedule = async (req, res) => {
       const new_schedule = await Schedules.create({
         group_id: groupId,
         title,
-        date,
         start_datetime,
         memo,
         location,

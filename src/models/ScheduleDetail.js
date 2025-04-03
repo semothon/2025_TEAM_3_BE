@@ -24,10 +24,6 @@ const ScheduleDetail = sequelize.define('ScheduleDetail', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  date: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
   start_datetime: {
     type: DataTypes.DATE,
     allowNull: true,
