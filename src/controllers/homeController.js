@@ -22,12 +22,12 @@ exports.getHomeData = async (req, res) => {
   try {
     const { start, end } = getTodayDateRange();
 
-    // 쿼리 1: 오늘 일정 개수 및 모임명
+    // ✅ 쿼리 1: 오늘 일정
     const todaySchedulesQuery = `
       SELECT DISTINCT g.title AS group_title
       FROM schedule_detail sd
       JOIN group_members gm ON gm.group_id = sd.group_id
-      JOIN groups g ON g.id = sd.group_id
+      JOIN \`groups\` g ON g.id = sd.group_id
       WHERE gm.user_id = :userId
         AND gm.status = 'accepted'
         AND sd.date BETWEEN :start AND :end
@@ -38,7 +38,7 @@ exports.getHomeData = async (req, res) => {
       type: Sequelize.QueryTypes.SELECT
     });
 
-    // 쿼리 2: 다가오는 일정 10개
+    // ✅ 쿼리 2: 다가오는 일정
     const upcomingSchedulesQuery = `
       SELECT sd.title, sd.start_datetime, sd.location,
         TIMESTAMPDIFF(SECOND, NOW(), sd.start_datetime) AS seconds_left
@@ -56,21 +56,20 @@ exports.getHomeData = async (req, res) => {
       type: Sequelize.QueryTypes.SELECT
     });
 
-    // 쿼리 3: 참여 중인 모임 정보
+    // ✅ 쿼리 3: 참여 중인 모임 정보
     const joinedGroupsQuery = `
-    SELECT g.id, g.title, g.description, g.category, g.max_members,
-           g.num_members, g.attendance, g.meet, g.mood
-    FROM groups g
-    JOIN group_members gm ON gm.group_id = g.id
-    WHERE gm.user_id = :userId
-      AND gm.status = 'accepted'
-  `;
-  
+      SELECT g.id, g.title, g.description, g.category, g.max_members,
+             g.num_members, g.attendance, g.meet, g.mood
+      FROM \`groups\` g
+      JOIN group_members gm ON gm.group_id = g.id
+      WHERE gm.user_id = :userId
+        AND gm.status = 'accepted'
+    `;
+
     const joinedGroups = await sequelize.query(joinedGroupsQuery, {
       replacements: { userId },
       type: Sequelize.QueryTypes.SELECT
     });
-  
 
     // category에 따라 분류
     const studyGroups = joinedGroups.filter(g => g.category === 'study');
