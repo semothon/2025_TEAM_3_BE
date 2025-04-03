@@ -26,7 +26,7 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/friends', friendRoutes);
 app.use('/api/records', recordRoutes);
 app.use('/api', myPageRoutes);
-app.use('api', homeRoutes);
+app.use('/api', homeRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
