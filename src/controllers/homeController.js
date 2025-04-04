@@ -1,6 +1,4 @@
-const { Op, Sequelize } = require('sequelize');
-const Groups = require('../models/Groups');
-const GroupMembers = require('../models/GroupMembers');
+const { Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
 
 const getTodayDateRange = () => {
