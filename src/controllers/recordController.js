@@ -14,10 +14,11 @@ exports.createRecords = async (req,res) => {
       const group_id = req.params.groupId;
       const {
         title,
-        is_shared,
-        is_public,
         content,
       } = req.body;
+
+      const is_shared = req.body.is_shared === 'true';
+      const is_public = req.body.is_public === 'true';
 
       const user_id = req.user && req.user.id;
       if(!user_id){
