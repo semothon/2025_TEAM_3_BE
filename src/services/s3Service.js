@@ -9,7 +9,7 @@ const s3 = new AWS.S3({
 
 function uploadFileToS3(fileBuffer, fileName, mimeType) {
   const params = {
-    Bucket: process.env.S3_BUCKET,
+    Bucket: process.env.AWS_S3_BUCKET,
     Key: fileName,
     Body: fileBuffer,
     ContentType: mimeType,
