@@ -10,6 +10,7 @@ const Ranking = require('../models/Ranking');
 
 exports.createRecords = async (req,res) => {
     try{
+      console.log(req.body);
       const group_id = req.params.groupId;
       const {
         title,
