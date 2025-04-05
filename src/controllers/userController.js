@@ -38,7 +38,7 @@ exports.register = async (req, res) => {
 
     console.log(newUser.toJSON());
     res.status(201).json({
-      message: "1단계 회원가입 성공",
+      message: "회원가입 성공",
       user: { 
         id: newUser.id,
         name: newUser.name,
@@ -73,3 +73,23 @@ exports.deleteAccount = async (req,res) => {
   }
 }
 
+exports.findId = async (req, res) => {
+  try{
+    const userId = req.user.id;
+    const user = await Users.findByPk(userId, {
+      attributes: ['login_id']
+    });
+    if(!user){
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({ login_id: user.login_id });
+
+  }catch (err){
+    console.error(err);
+    res.status(500).json({ error: "server err"});
+  }
+}
+
+exports.findPass = async (req, res) => {
+
+}
