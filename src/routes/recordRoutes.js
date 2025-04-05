@@ -13,4 +13,6 @@ router.get('/:recordId', authMiddleware, recordController.showRecords);
 
 router.post('/:recordId/like', authMiddleware, recordController.likeRecord);
 
+router.post('/:recordId/comments', authMiddleware, recordController.addComment);
+
 module.exports = router;
