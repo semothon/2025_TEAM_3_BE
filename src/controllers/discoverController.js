@@ -61,38 +61,38 @@ exports.Discover = async (req, res) => {
       order: orderOption
     });
 
-    const user = await Users.findByPk(userId, {
-      attributes: ['interest', 'hobby']
-    });
+//     const user = await Users.findByPk(userId, {
+//       attributes: ['interest', 'hobby']
+//     });
     
-    const acceptedGroups = await Groups.findAll({
-      where: { id: acceptedGroupIds },
-      attributes: ['major', 'description']
-    });
+//     const acceptedGroups = await Groups.findAll({
+//       where: { id: acceptedGroupIds },
+//       attributes: ['major', 'description']
+//     });
     
-    const groupInfoStrings = acceptedGroups.map(g => 
-      `Major: ${g.major || 'N/A'}, Description: ${g.description || 'N/A'}`
-    ).join('\n');
+//     const groupInfoStrings = acceptedGroups.map(g => 
+//       `Major: ${g.major || 'N/A'}, Description: ${g.description || 'N/A'}`
+//     ).join('\n');
 
-    const userInterest = user.interest ? JSON.stringify(user.interest) : "없음";
-    const userHobby = user.hobby ? JSON.stringify(user.hobby) : "없음";
+//     const userInterest = user.interest ? JSON.stringify(user.interest) : "없음";
+//     const userHobby = user.hobby ? JSON.stringify(user.hobby) : "없음";
 
-    const prompt = `나는 다음 그룹들에 가입해 있어:
-${groupInfoStrings}
-내 관심사는: ${userInterest}
-내 취미는: ${userHobby}
+//     const prompt = `나는 다음 그룹들에 가입해 있어:
+// ${groupInfoStrings}
+// 내 관심사는: ${userInterest}
+// 내 취미는: ${userHobby}
 
-이 정보를 바탕으로, 나와 비슷한 성향의 새로운 스터디 그룹 3개를 추천해줘.
-각 추천 그룹에 대해 그룹 이름과 추천 이유를 JSON 형식으로 알려줘.
-Please provide your response in strict JSON format
-예시 응답:
-[
-  {"groupName": "그룹1", "reason": "추천 이유1"},
-  {"groupName": "그룹2", "reason": "추천 이유2"},
-  {"groupName": "그룹3", "reason": "추천 이유3"}
-]`;
+// 이 정보를 바탕으로, 나와 비슷한 성향의 새로운 스터디 그룹 3개를 추천해줘.
+// 각 추천 그룹에 대해 그룹 이름과 추천 이유를 JSON 형식으로 알려줘.
+// Please provide your response in strict JSON format
+// 예시 응답:
+// [
+//   {"groupName": "그룹1", "reason": "추천 이유1"},
+//   {"groupName": "그룹2", "reason": "추천 이유2"},
+//   {"groupName": "그룹3", "reason": "추천 이유3"}
+// ]`;
 
-    const airecommendation = await getGroupRecommendations(prompt);
+//     const airecommendation = await getGroupRecommendations(prompt);
     res.status(200).json({ 
       groups
     });
