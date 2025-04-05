@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const userService = require('../services/userService');
 const authService = require('../services/authService');
 const { sendPasswordResetEmail } = require('../services/emailService');
