@@ -8,6 +8,7 @@ exports.loginUser = async (req, res) => {
     res.status(200).json({ token, message: "login!" });
   }catch (err) {
     console.error(err);
+    res.status(500).json({ error: "아이디/비밀번호를 다시 확인해주세요" });
   }
 }
 

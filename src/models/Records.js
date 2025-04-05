@@ -40,7 +40,7 @@ const records = sequelize.define('records', {
     allowNull: true,
   },
   file_url: {
-    type: DataTypes.STRING,
+    type: DataTypes.JSON,
     allowNull: true,
   },
   created_at: {
