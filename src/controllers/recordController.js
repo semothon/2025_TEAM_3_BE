@@ -27,7 +27,7 @@ exports.createRecords = async (req,res) => {
         content,
         user_id,
         file_url
-      })
+      });
 
       res.status(201).json({ message: "기록 생성", record: newRecord});
     }catch (err){
