@@ -27,9 +27,10 @@ exports.getHomeData = async (req, res) => {
       JOIN group_members gm ON gm.group_id = sd.group_id
       JOIN \`groups\` g ON g.id = sd.group_id
       WHERE gm.user_id = :userId
-        AND gm.status = 'accepted'
-        AND sd.date BETWEEN :start AND :end
+      AND gm.status = 'accepted'
+      AND sd.start_datetime BETWEEN :start AND :end
     `;
+  
 
     const todaySchedules = await sequelize.query(todaySchedulesQuery, {
       replacements: { userId, start, end },
