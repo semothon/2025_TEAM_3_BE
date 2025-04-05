@@ -9,7 +9,7 @@ router.post('/register', userController.register);
 
 router.get('/deleteId',authMiddleware, userController.deleteAccount);
 
-router.get('/findId', userController.findId);
+router.post('/findId', userController.findId);
 
 router.post('/requestReset', userController.findPass);
 
