@@ -71,21 +71,18 @@ exports.createRecords = async (req,res) => {
           let newTree = '0';
           let newFruitNum = 0;
 
-          if (newRecordNum === 1) {
-            newTree = '0';
-            newFruitNum = 0;
-          } else if (newRecordNum === 2) {
+          if (newRecordNum === 6) {
             newTree = '1';
             newFruitNum = 0;
-          } else if (newRecordNum === 3) {
+          } else if (newRecordNum === 12) {
             newTree = '2';
             newFruitNum = 0;
-          } else if (newRecordNum === 4) {
+          } else if (newRecordNum === 18) {
             newTree = '3';
             newFruitNum = 0;
-          } else if (newRecordNum > 4) {
+          } else if (newRecordNum > 18) {
             newTree = '3';
-            newFruitNum = newRecordNum - 4;
+            newFruitNum = newRecordNum - 18;
           }
 
           await ranking.update({ tree: newTree, fruit_num: newFruitNum });
