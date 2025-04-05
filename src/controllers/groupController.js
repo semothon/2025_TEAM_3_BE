@@ -4,6 +4,7 @@ const Records = require('../models/Records');
 const RecordComment = require('../models/RecordComments');
 const User = require('../models/User');
 const ScheduleDetail = require('../models/ScheduleDetail');
+const Ranking = require('../models/Ranking');
 
 exports.groupDetail = async (req, res) => {
   const userId = req.user?.id;
@@ -133,24 +134,14 @@ exports.groupDetail = async (req, res) => {
 };
 
 exports.createGroup = async (req, res) => {
-  try{
+  try {
     const { 
-      title, 
-      max_members, 
-      goal, 
-      description, 
-      category, 
-      is_public,
-      major,
-      field, 
-      attendance, 
-      meet, 
-      mood, 
-      approve 
+      title, max_members, goal, description, category, is_public,
+      major, field, attendance, meet, mood, approve 
     } = req.body;
-    
+
     const leader_id = req.user && req.user.id;
-    if(!leader_id){
+    if (!leader_id) {
       return res.status(401).json({ error: "로그인이 필요합니다." });
     }
 
@@ -182,12 +173,21 @@ exports.createGroup = async (req, res) => {
       joined_at: new Date(),
     });
 
-    res.status(201).json({ message: "그룹 생성", group: newGroup});
+    await Ranking.create({
+      group_id: newGroup.id,
+      record_num: 0,
+      fruit_num: 0,
+      tree: '0',
+      category: category
+    });
+
+    res.status(201).json({ message: "그룹 생성", group: newGroup });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "서버 에러"});
+    res.status(500).json({ error: "서버 에러" });
   }
 };
+
 
 
 
