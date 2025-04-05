@@ -72,3 +72,4 @@ exports.deleteAccount = async (req,res) => {
     res.status(500).json({ error: "server err" });
   }
 }
+
