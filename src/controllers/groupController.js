@@ -1,5 +1,6 @@
 const Groups = require('../models/Groups');
 const GroupMembers = require('../models/GroupMembers');
+const Records = require('../models/Records');
 const ScheduleDetail = require('../models/ScheduleDetail');
 
 exports.groupDetail = async (req, res) => {
@@ -20,6 +21,22 @@ exports.groupDetail = async (req, res) => {
       ]
     });
 
+    const sharedRecords = await Records.findAll({
+      where: {
+          group_id: groupId,
+          is_shared: true
+      },
+      attributes: ['title', 'content', 'file_url', 'created_at']
+  });
+
+  const personalRecords = await Records.findAll({
+    where: {
+        group_id: groupId,
+        is_shared: false
+    },
+    attributes: ['title', 'content','is_public', 'file_url', 'created_at']
+  });
+
     const schedule = await ScheduleDetail.findAll({
       where: { group_id: groupId}
     })
@@ -28,7 +45,7 @@ exports.groupDetail = async (req, res) => {
       return res.status(404).json({ error: "그룹을 찾을 수 없습니다." });
     }
 
-    res.status(200).json({ group, schedule });
+    res.status(200).json({ group, schedule, sharedRecords, personalRecords });
 
   } catch (err) {
     console.error(err);
