@@ -24,6 +24,7 @@ app.use('/api', userRoutes);
 app.use('/api', discoverRoutes);
 app.use('/api', searchRoutes);
 app.use('/api/groups', groupRoutes);
+app.use('/api', homeRoutes);
 app.use('/api/friends', friendRoutes);
 app.use('/api/records', recordRoutes);
 app.use('/api', myPageRoutes);
