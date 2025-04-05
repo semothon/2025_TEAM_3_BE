@@ -49,6 +49,16 @@ const records = sequelize.define('records', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
+  liked_user_ids: {
+    type: DataTypes.JSON,
+    allowNull: false,
+    defaultValue: []
+  },
+  likes: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  }
 }, {
   tableName: 'records',
   timestamps: false,

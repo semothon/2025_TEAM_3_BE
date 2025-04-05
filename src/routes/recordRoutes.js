@@ -9,6 +9,8 @@ router.get('/:groupId/personalRecord', recordController.getPersonalRecords);
 
 router.get('/:groupId/sharedRecord',recordController.getSharedRecords);
 
-router.get('/:recordId', recordController.showRecords);
+router.get('/:recordId', authMiddleware, recordController.showRecords);
+
+router.post('/:recordId/like', authMiddleware, recordController.likeRecord);
 
 module.exports = router;
