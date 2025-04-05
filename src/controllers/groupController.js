@@ -1,5 +1,6 @@
 const Groups = require('../models/Groups');
 const GroupMembers = require('../models/GroupMembers');
+const ScheduleDetail = require('../models/ScheduleDetail');
 
 exports.groupDetail = async (req, res) => {
   try {
@@ -19,11 +20,15 @@ exports.groupDetail = async (req, res) => {
       ]
     });
 
+    const schedule = await ScheduleDetail.findAll({
+      where: { group_id: groupId}
+    })
+
     if(!group){
       return res.status(404).json({ message: "그룹을 찾을 수 없습니다." });
     }
 
-    res.status(200).json({ group });
+    res.status(200).json({ group, schedule });
 
   } catch (err) {
     console.error(err);
