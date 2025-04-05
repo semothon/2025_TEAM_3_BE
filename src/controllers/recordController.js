@@ -2,7 +2,6 @@ const { Sequelize, Op } = require('sequelize');
 const sequelize = require('../config/database');
 const Records = require('../models/Records');
 const RecordComment = require('../models/RecordComments');
-const User = require('../models/User'); // 댓글 작성자 이름/프로필용
 const ScheduleDetail = require('../models/ScheduleDetail');
 const { uploadFileToS3 } = require('../services/s3Service');
 const { extractTimeExif } = require('../utils/exifService');
@@ -10,7 +9,6 @@ const Ranking = require('../models/Ranking');
 
 exports.createRecords = async (req,res) => {
     try{
-      console.log(req.body);
       const group_id = req.params.groupId;
       const {
         title,
@@ -67,6 +65,30 @@ exports.createRecords = async (req,res) => {
 
         if(schedule) {
           await Ranking.increment('record_num', { where: { group_id }});
+
+          const ranking = await Ranking.findOne({ where: { group_id } });
+          const newRecordNum = ranking.record_num;
+          let newTree = '0';
+          let newFruitNum = 0;
+
+          if (newRecordNum === 1) {
+            newTree = '0';
+            newFruitNum = 0;
+          } else if (newRecordNum === 2) {
+            newTree = '1';
+            newFruitNum = 0;
+          } else if (newRecordNum === 3) {
+            newTree = '2';
+            newFruitNum = 0;
+          } else if (newRecordNum === 4) {
+            newTree = '3';
+            newFruitNum = 0;
+          } else if (newRecordNum > 4) {
+            newTree = '3';
+            newFruitNum = newRecordNum - 4;
+          }
+
+          await ranking.update({ tree: newTree, fruit_num: newFruitNum });
         }
       }
 
