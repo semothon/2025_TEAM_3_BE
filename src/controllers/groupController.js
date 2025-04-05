@@ -26,7 +26,7 @@ exports.groupDetail = async (req, res) => {
           group_id: groupId,
           is_shared: true
       },
-      attributes: ['title', 'content', 'file_url', 'created_at']
+      attributes: ['title', 'content', 'file_url', 'created_at', 'likes', 'liked_user_ids', 'comments']
   });
 
   const personalRecords = await Records.findAll({

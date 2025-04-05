@@ -47,7 +47,7 @@ exports.createRecords = async (req,res) => {
         where: { id: recordId },
         attributes: [
           'title', 'is_public', 'is_shared', 'content',
-          'file_url', 'created_at', 'likes', 'liked_user_ids'
+          'file_url', 'created_at', 'likes', 'liked_user_ids', 'comments'
         ]
       });
   
@@ -177,6 +177,11 @@ exports.createRecords = async (req,res) => {
         user_id: userId,
         content,
         parent_id: parent_id || null,
+      });
+
+      await Records.increment('comments', {
+        by: 1,
+        where: { id: recordId }
       });
   
       res.status(201).json({ message: '댓글이 등록되었습니다.', comment: newComment });
