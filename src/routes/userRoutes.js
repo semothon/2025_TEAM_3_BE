@@ -9,4 +9,6 @@ router.post('/register', userController.register);
 
 router.get('/deleteId',authMiddleware, userController.deleteAccount);
 
+router.get('/findAccount', authMiddleware, userController.findAccount);
+
 module.exports = router;
