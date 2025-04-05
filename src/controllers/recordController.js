@@ -6,7 +6,7 @@ const User = require('../models/User'); // 댓글 작성자 이름/프로필용
 const ScheduleDetail = require('../models/ScheduleDetail');
 const { uploadFileToS3 } = require('../services/s3Service');
 const { extractTimeExif } = require('../utils/exifService');
-const Ranking = require('../models/Rankings');
+const Ranking = require('../models/Ranking');
 
 exports.createRecords = async (req,res) => {
     try{
