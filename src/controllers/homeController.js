@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
+const Users = require('../models/User');
 
 const getTodayDateRange = () => {
   const start = new Date();
@@ -13,6 +14,10 @@ const getTodayDateRange = () => {
 
 exports.getHomeData = async (req, res) => {
   const userId = req.user?.id;
+  const user = await Users.findByPk(userId,{
+    attributes: ['name']
+  })
+
   if (!userId) {
     return res.status(401).json({ message: "로그인이 필요합니다." });
   }
@@ -76,6 +81,7 @@ exports.getHomeData = async (req, res) => {
 
     // 응답 반환
     res.status(200).json({
+      name: user.name,
       todaySchedule: {
         count: todaySchedules.length,
         groupNames: todaySchedules.map(s => s.group_title)
