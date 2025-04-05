@@ -41,11 +41,9 @@
 
 ---
 
-🧪 로컬 개발 환경 세팅
-1. 프로젝트 클론
-bash
-복사
-편집
+## 🧪 로컬 개발 환경 세팅
+
+### 1. 프로젝트 클론
 git clone https://github.com/semothon/2025_TEAM_3_BE.git
 cd 2025_TEAM_3_BE
 2. 패키지 설치
@@ -81,10 +79,19 @@ AWS_ACCESS_KEY_ID=your_aws_access_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 AWS_REGION=ap-northeast-2
 AWS_S3_BUCKET=semo
-⚠️ .env 파일은 GitHub에 업로드되지 않도록 .gitignore에 반드시 포함시켜야 합니다.
+⚠️ .env는 민감한 정보가 포함되어 있으므로, .gitignore에 반드시 포함되어야 합니다.
 
 4. 서버 실행
 bash
 복사
 편집
+npm start
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=ap-northeast-2
+AWS_S3_BUCKET=semo
+⚠️ .env 파일은 GitHub에 업로드되지 않도록 .gitignore에 반드시 포함시켜야 합니다.
+
+4. 서버 실행
+
 npm start
