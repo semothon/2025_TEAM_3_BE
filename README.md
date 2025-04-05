@@ -11,7 +11,7 @@
 - **Cloud**: AWS EC2, S3
 - **Auth**: JWT
 - **Email Service**: Gmail SMTP
-- **Others**: EXIF 기반 사진 인증, OpenAI API 활용
+- **Others**: EXIF 기반 사진 인증
 
 ---
 
