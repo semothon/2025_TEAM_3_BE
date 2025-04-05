@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const groupController = require('../controllers/groupController');
 
 // // 그룹 상세 정보
-router.get('/:groupId', groupController.groupDetail);
+router.get('/:groupId', authMiddleware, groupController.groupDetail);
 
 // 그룹 생성
 router.post('/',authMiddleware, groupController.createGroup);

@@ -58,6 +58,11 @@ const records = sequelize.define('records', {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
+  },
+  comments: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   }
 }, {
   tableName: 'records',

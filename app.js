@@ -10,6 +10,7 @@ const recordRoutes = require('./src/routes/recordRoutes');
 const myPageRoutes = require('./src/routes/myPageRoutes');
 const homeRoutes = require('./src/routes/homeRoutes');
 const scheduleRoutes = require('./src/routes/scheduleRoutes');
+const rankingRoutes = require('./src/routes/rankingRoutes'); 
 const port = process.env.PORT || 3034;
 
 app.use(cors());
@@ -30,6 +31,7 @@ app.use('/api/records', recordRoutes);
 app.use('/api', myPageRoutes);
 app.use('/api', homeRoutes);
 app.use('/api', scheduleRoutes);
+app.use('/api', rankingRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
