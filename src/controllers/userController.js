@@ -96,7 +96,7 @@ exports.findId = async (req, res) => {
 
 exports.findPass = async (req, res) => {
   try{
-    const { login_id,email } = req.body;
+    const { login_id } = req.body;
     const user = await Users.findOne({ where: { login_id }});
     if(!user){
       return res.status(404).json({ message: "해당 아이디의 사용자가 없습니다." });
@@ -107,7 +107,7 @@ exports.findPass = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    await sendPasswordResetEmail(email, resetToken);
+    await sendPasswordResetEmail(user.email, resetToken);
 
     res.status(200).json({ message: "비밀번호 재설정 이메일이 전송되었습니다." });
 
