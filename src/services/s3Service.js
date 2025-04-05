@@ -13,6 +13,7 @@ function uploadFileToS3(fileBuffer, fileName, mimeType) {
     Key: fileName,
     Body: fileBuffer,
     ContentType: mimeType,
+    ACL: 'public-read',
   };
 
   return s3.upload(params).promise();
