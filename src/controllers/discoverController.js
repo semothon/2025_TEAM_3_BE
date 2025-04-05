@@ -94,8 +94,7 @@ Please provide your response in strict JSON format
 
     const airecommendation = await getGroupRecommendations(prompt);
     res.status(200).json({ 
-      groups,
-      airecommendation
+      groups
     });
   } catch (err) {
     console.error(err);
