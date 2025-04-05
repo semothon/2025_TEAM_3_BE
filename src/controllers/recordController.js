@@ -2,7 +2,7 @@ const Records = require('../models/Records');
 
 exports.createRecords = async (req,res) => {
     try{
-      const group_id = req.params.groupID;
+      const group_id = req.params.groupId;
       const {
         title,
         is_shared,
@@ -15,16 +15,16 @@ exports.createRecords = async (req,res) => {
         return res.status(401).json({ message: "로그인이 필요합니다." });
       }
 
-      const file_url = req.body.file_url || '';
+      const file_url = req.body.file_url || {};
 
       const newRecord = await Records.create({
+        group_id,
         title,
         is_shared,
         is_public,
         content,
         user_id,
-        file_url,
-        group_id
+        file_url
       })
 
       res.status(201).json({ message: "기록 생성", record: newRecord});
@@ -43,7 +43,7 @@ exports.getSharedRecords = async (req, res) => {
                 group_id: groupId,
                 is_shared: true
             },
-            attributes: ['title', 'content', 'file_url', 'create_at']
+            attributes: ['title', 'content', 'file_url', 'created_at']
         });
         
         res.status(200).json({ sharedRecords });
@@ -62,7 +62,7 @@ exports.getSharedRecords = async (req, res) => {
                 group_id: groupId,
                 is_shared: false
             },
-            attributes: ['title', 'content','is_public', 'file_url', 'create_at']
+            attributes: ['title', 'content','is_public', 'file_url', 'created_at']
         });
         res.status(200).json({ personalRecords });
     }catch (err){
@@ -73,22 +73,22 @@ exports.getSharedRecords = async (req, res) => {
   
   exports.showRecords = async (req, res) => {
     try{
-      const groupId = req.params.groupID;
-      const record = await Records.findAll(groupId, {
+      const recordId = req.params.recordId;
+      const record = await Records.findOne({
         where: {
-          group_id:groupId
+          id: recordId
         },
         attributes: [
           'title',
           'is_public',
           'is_shared',
           'content',
-          "file_url",
+          'file_url',
           'created_at'
         ]
       });
 
-      if(!record || record.length() == 0){
+      if(!record || record.length == 0){
         return res.status(404).json({ message: "기록을 찾을 수 없습니다." });
       }
   

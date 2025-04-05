@@ -13,7 +13,8 @@ const GroupMember = sequelize.define('GroupMember', {
     references: {
       model: 'users', 
       key: 'id',
-    }
+    },
+    onDelete: 'CASCADE',
   },
   group_id: {
     type: DataTypes.INTEGER,
@@ -21,7 +22,8 @@ const GroupMember = sequelize.define('GroupMember', {
     references: {
       model: 'groups', 
       key: 'id',
-    }
+    },
+    onDelete: 'CASCADE',
   },
   role: {
     type: DataTypes.ENUM('leader', 'member'),

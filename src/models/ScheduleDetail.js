@@ -1,20 +1,11 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const records = sequelize.define('records', {
+const ScheduleDetail = sequelize.define('ScheduleDetail', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'users',
-      key: 'id',
-    },
-    onDelete: 'CASCADE',
   },
   group_id: {
     type: DataTypes.INTEGER,
@@ -25,33 +16,35 @@ const records = sequelize.define('records', {
     },
     onDelete: 'CASCADE',
   },
-  is_public: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  is_shared: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  content: {
+  start_datetime: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  memo: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
-  file_url: {
-    type: DataTypes.JSON,
+  location: {
+    type: DataTypes.STRING,
     allowNull: true,
   },
   created_at: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
+    allowNull: false,
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    allowNull: false,
   },
 }, {
-  tableName: 'records',
+  tableName: 'schedule_detail',
   timestamps: false,
 });
 
-module.exports = records;
+module.exports = ScheduleDetail;

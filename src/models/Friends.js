@@ -15,6 +15,7 @@ const Friends = sequelize.define('friends', {
       model: 'users',
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
   friend_id: {
     type: DataTypes.INTEGER,
@@ -23,6 +24,7 @@ const Friends = sequelize.define('friends', {
       model: 'users',
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
   status: {
     type: DataTypes.ENUM('pending', 'accepted'),

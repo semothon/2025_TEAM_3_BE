@@ -1,5 +1,7 @@
 const userService = require('../services/userService');
 const authService = require('../services/authService');
+const Users = require('../models/User');
+const User = require('../models/User');
 
 exports.loginUser = async (req, res) => {
   try{
@@ -8,17 +10,31 @@ exports.loginUser = async (req, res) => {
     res.status(200).json({ token, message: "login!" });
   }catch (err) {
     console.error(err);
+    res.status(500).json({ error: "아이디/비밀번호를 다시 확인해주세요" });
   }
 }
 
-exports.registerBasic = async (req, res) => {
+exports.register = async (req, res) => {
   try {
-    const { name, email, password, login_id } = req.body;
+    const {
+      name,
+      email,
+      password,
+      login_id,
+      hobby,
+      interest,
+      department,
+      timetable 
+    } = req.body;
     const newUser = await userService.createUserBasic({ 
       name, 
       email, 
       password, 
       login_id, 
+      hobby,
+      interest,
+      department,
+      timetable
     });
 
     console.log(newUser.toJSON());
@@ -27,7 +43,11 @@ exports.registerBasic = async (req, res) => {
       user: { 
         id: newUser.id,
         name: newUser.name,
-        email: newUser.email
+        email: newUser.email,
+        hobby: newUser.hobby,
+        interest: newUser.interest,
+        department: newUser.department,
+        timetable: newUser.timetable,
       },
     });
   } catch (err) {
@@ -39,34 +59,15 @@ exports.registerBasic = async (req, res) => {
   }
 };
 
-// 2단계 회원가입 (추가 정보)
-exports.registerExtra = async (req, res) => {
-  try {
-    // 1단계에서 생성된 userId를 클라이언트가 보내준다고 가정
-    const { userId } = req.params;
-    const { hobby, interest, department, timetable } = req.body;
-
-    const updatedUser = await userService.updateUserExtra(userId, {
-      hobby,
-      interest,
-      department,
-      timetable,
-    });
-    res.status(200).json({
-      message: "2단계 정보 업데이트 성공",
-      user: {
-        id: updatedUser.id,
-        hobby: updatedUser.hobby,
-        interest: updatedUser.interest,
-        department: updatedUser.department,
-        timetable: updatedUser.timetable,
-      },
-    });
-  } catch (err) {
-    console.error(err);
-    if (err.message === '사용자를 찾을 수 없습니다.') {
-      return res.status(404).json({ message: err.message });
+exports.deleteAccount = async (req,res) => {
+  try{
+    const userId = req.user.id;
+    const user = Users.findByPk(userId);
+    if(!user){
+      await user.destroy();
     }
-    res.status(500).json({ message: "서버 에러" });
+  }catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "server err" });
   }
-};
+}

@@ -1,6 +1,4 @@
-const { Op, Sequelize } = require('sequelize');
-const Groups = require('../models/Groups');
-const GroupMembers = require('../models/GroupMembers');
+const { Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
 
 const getTodayDateRange = () => {
@@ -16,7 +14,7 @@ const getTodayDateRange = () => {
 exports.getHomeData = async (req, res) => {
   const userId = req.user?.id;
   if (!userId) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ message: "로그인이 필요합니다." });
   }
 
   try {
@@ -29,9 +27,10 @@ exports.getHomeData = async (req, res) => {
       JOIN group_members gm ON gm.group_id = sd.group_id
       JOIN \`groups\` g ON g.id = sd.group_id
       WHERE gm.user_id = :userId
-        AND gm.status = 'accepted'
-        AND sd.date BETWEEN :start AND :end
+      AND gm.status = 'accepted'
+      AND sd.start_datetime BETWEEN :start AND :end
     `;
+  
 
     const todaySchedules = await sequelize.query(todaySchedulesQuery, {
       replacements: { userId, start, end },
@@ -40,7 +39,7 @@ exports.getHomeData = async (req, res) => {
 
     // ✅ 쿼리 2: 다가오는 일정
     const upcomingSchedulesQuery = `
-      SELECT sd.title, sd.start_datetime, sd.location,
+      SELECT sd.id, sd.title, sd.start_datetime, sd.location,
         TIMESTAMPDIFF(SECOND, NOW(), sd.start_datetime) AS seconds_left
       FROM schedule_detail sd
       JOIN group_members gm ON gm.group_id = sd.group_id
@@ -91,5 +90,47 @@ exports.getHomeData = async (req, res) => {
   } catch (err) {
     console.error('🔥 homeController error:', err.message);
     res.status(500).json({ error: 'Server error', details: err.message });
+  }
+};
+
+exports.getScheduleDetail = async (req, res) => {
+  try {
+    const scheduleId = req.params.scheduleId;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: '로그인이 필요합니다.' });
+    }
+
+    const query = `
+      SELECT 
+        sd.title,
+        sd.start_datetime,
+        sd.memo,
+        sd.location,
+        g.title AS group_title
+      FROM schedule_detail sd
+      JOIN \`groups\` g ON sd.group_id = g.id
+      JOIN group_members gm ON gm.group_id = g.id
+      WHERE sd.id = :scheduleId
+        AND gm.user_id = :userId
+        AND gm.status = 'accepted'
+      LIMIT 1
+    `;
+
+    const [schedule] = await sequelize.query(query, {
+      replacements: { scheduleId, userId },
+      type: Sequelize.QueryTypes.SELECT
+    });
+
+    if (!schedule) {
+      return res.status(404).json({ message: '일정을 찾을 수 없거나 권한이 없습니다.' });
+    }
+
+    res.status(200).json({ schedule });
+
+  } catch (err) {
+    console.error('🔥 getScheduleDetail error:', err.message);
+    res.status(500).json({ message: '서버 에러', details: err.message });
   }
 };
