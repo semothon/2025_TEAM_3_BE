@@ -7,6 +7,6 @@ router.post('/login', userController.loginUser);
 
 router.post('/register', userController.register);
 
-router.get('/deleteId', userController.deleteAccount);
+router.get('/deleteId',authMiddleware, userController.deleteAccount);
 
 module.exports = router;
