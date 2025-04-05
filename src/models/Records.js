@@ -14,6 +14,7 @@ const records = sequelize.define('records', {
       model: 'users',
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
   group_id: {
     type: DataTypes.INTEGER,
@@ -22,6 +23,7 @@ const records = sequelize.define('records', {
       model: 'groups',
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
   is_public: {
     type: DataTypes.BOOLEAN,

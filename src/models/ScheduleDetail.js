@@ -14,6 +14,7 @@ const ScheduleDetail = sequelize.define('ScheduleDetail', {
       model: 'groups',
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
   title: {
     type: DataTypes.STRING,

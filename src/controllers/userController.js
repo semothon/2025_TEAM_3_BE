@@ -1,5 +1,7 @@
 const userService = require('../services/userService');
 const authService = require('../services/authService');
+const Users = require('../models/User');
+const User = require('../models/User');
 
 exports.loginUser = async (req, res) => {
   try{
@@ -57,4 +59,15 @@ exports.register = async (req, res) => {
   }
 };
 
-//exports.deleteAccount
+exports.deleteAccount = async (req,res) => {
+  try{
+    const userId = req.user.id;
+    const user = Users.findByPk(userId);
+    if(!user){
+      await user.destroy();
+    }
+  }catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "server err" });
+  }
+}
