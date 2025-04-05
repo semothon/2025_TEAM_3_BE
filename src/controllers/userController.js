@@ -1,7 +1,6 @@
 const userService = require('../services/userService');
 const authService = require('../services/authService');
 const Users = require('../models/User');
-const User = require('../models/User');
 
 exports.loginUser = async (req, res) => {
   try{
@@ -62,10 +61,12 @@ exports.register = async (req, res) => {
 exports.deleteAccount = async (req,res) => {
   try{
     const userId = req.user.id;
-    const user = Users.findByPk(userId);
+    const user = await Users.findByPk(userId);
     if(!user){
-      await user.destroy();
+      return res.status(404).json({ error: "User not found" });
     }
+    await user.destroy();
+    res.status(200).json({ message: "User deleted successfully" });
   }catch (err) {
     console.error(err);
     res.status(500).json({ error: "server err" });
