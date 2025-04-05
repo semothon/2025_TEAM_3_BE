@@ -13,7 +13,8 @@ const GroupMember = sequelize.define('GroupMember', {
     references: {
       model: 'users', 
       key: 'id',
-    }
+    },
+    onDelete: 'CASCADE',
   },
   group_id: {
     type: DataTypes.INTEGER,
@@ -21,7 +22,8 @@ const GroupMember = sequelize.define('GroupMember', {
     references: {
       model: 'groups', 
       key: 'id',
-    }
+    },
+    onDelete: 'CASCADE',
   },
   role: {
     type: DataTypes.ENUM('leader', 'member'),
@@ -38,7 +40,7 @@ const GroupMember = sequelize.define('GroupMember', {
   },
 }, {
   tableName: 'group_members',
-  timestamps: false, // createdAt, updatedAt 자동 관리를 원하지 않는 경우
+  timestamps: false,
 });
 
 module.exports = GroupMember;
