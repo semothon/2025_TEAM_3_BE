@@ -9,6 +9,10 @@ router.post('/register', userController.register);
 
 router.get('/deleteId',authMiddleware, userController.deleteAccount);
 
-router.get('/findAccount', authMiddleware, userController.findAccount);
+router.get('/findId', userController.findId);
+
+router.post('/requestReset', userController.findPass);
+
+router.post('/resetPassword', userController.resetPass);
 
 module.exports = router;
