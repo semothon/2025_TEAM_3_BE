@@ -1,6 +1,10 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
 const Records = require('../models/Records');
+const ScheduleDetail = require('../models/ScheduleDetail');
+const { uploadFileToS3 } = require('../services/s3Service');
+const { extractTimeExif } = require('../utils/exifService');
+const GroupRanking = require('../models/Rankings');
 
 exports.createRecords = async (req,res) => {
     try{
@@ -17,7 +21,24 @@ exports.createRecords = async (req,res) => {
         return res.status(401).json({ message: "로그인이 필요합니다." });
       }
 
-      const file_url = req.body.file_url || {};
+      let fileUrls = [];
+
+      if(req.files && req.files.length > 0){
+        fileUrls = await Promise.all(
+          req.files.map(async (file) => {
+            const fileName = `records/${Date.now()}_${file.originalname}`;
+            const result = await uploadFileToS3(file.buffer, fileName, file.mimetype);
+            return result.Location;
+          })
+        );
+      } else {
+        fileUrls = req.body.file_url || [];
+      }
+
+      let timeExif = null;
+      if (req.files && req.files.length > 0 && req.files[0].buffer) {
+        timeExif = extractTimeExif(req.files[0].buffer);
+      }
 
       const newRecord = await Records.create({
         group_id,
@@ -26,8 +47,24 @@ exports.createRecords = async (req,res) => {
         is_public,
         content,
         user_id,
-        file_url
+        file_url: fileUrls
       });
+
+      if(timeExif && timeExif.DateTimeOriginal){
+        const exifDate = new Date(timeExif.DateTimeOriginal * 1000);
+        const exifDateString = exifDate.toISOString().split('T')[0];
+      
+        const schedule = await ScheduleDetail.findOne({
+          where: {
+            group_id,
+            [Op.and]: Sequelize.where(Sequelize.fn('DATE', sequelize.col('start_datetime')), exifDateString)
+          }
+        });
+
+        if(schedule) {
+          await GroupRanking.increment('record_num', { where: { group_id }});
+        }
+      }
 
       res.status(201).json({ message: "기록 생성", record: newRecord});
     }catch (err){
@@ -35,6 +72,8 @@ exports.createRecords = async (req,res) => {
       res.status(500).json({ message: "서버 에러" });
     }
   }
+
+  
   
   exports.showRecords = async (req, res) => {
     try{
