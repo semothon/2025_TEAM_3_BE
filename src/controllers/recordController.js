@@ -1,3 +1,5 @@
+const { Sequelize } = require('sequelize');
+const sequelize = require('../config/database');
 const Records = require('../models/Records');
 
 exports.createRecords = async (req,res) => {
@@ -93,8 +95,6 @@ exports.getSharedRecords = async (req, res) => {
 
 
       const raw = record.liked_user_ids;
-      console.log('🧩 userId:', userId, typeof userId);
-      console.log('🧩 liked_user_ids raw:', raw);
         
       const likedUsers = Array.isArray(raw) ? raw : [];
       const likedByMe = userId != null
@@ -150,7 +150,7 @@ exports.getSharedRecords = async (req, res) => {
         // 👍 좋아요 추가
         likedUsers.push(userId);
         await record.update({
-          liked_user_ids: likedUsers,
+          liked_user_ids: sequelize.literal(`CAST('${JSON.stringify(likedUsers)}' AS JSON)`),
           likes: record.likes + 1
         });
         console.log(`👍 user ${userId} 좋아요 추가`);
