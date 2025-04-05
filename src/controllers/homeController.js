@@ -63,7 +63,7 @@ exports.getHomeData = async (req, res) => {
     // ✅ 쿼리 3: 참여 중인 모임 정보
     const joinedGroupsQuery = `
       SELECT g.id, g.title, g.description, g.category, g.max_members,
-             g.num_members, g.attendance, g.meet, g.mood
+             g.num_members, g.attendance, g.meet, g.mood, g.thumbnail
       FROM \`groups\` g
       JOIN group_members gm ON gm.group_id = g.id
       WHERE gm.user_id = :userId
