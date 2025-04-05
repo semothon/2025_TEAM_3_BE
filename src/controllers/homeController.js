@@ -28,7 +28,7 @@ exports.getHomeData = async (req, res) => {
       JOIN \`groups\` g ON g.id = sd.group_id
       WHERE gm.user_id = :userId
       AND gm.status = 'accepted'
-      AND sd.start_datetime BETWEEN :start AND :end
+      AND sd.date BETWEEN :start AND :end
     `;
   
 
