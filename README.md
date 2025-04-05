@@ -68,9 +68,6 @@ DB_PORT=3306
 # JWT
 JWT_SECRET=your_jwt_secret_key
 
-# OpenAI (선택)
-OPENAI_API_KEY=your_openai_key
-
 # Email
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASSWORD=your_app_password
@@ -117,8 +114,6 @@ npm start
 
 ## 📌 향후 개선 예정
 
-- [ ] OpenAI 기반 인증 보조 로직
-- [ ] 관리자 전용 대시보드 추가
 - [ ] 사진 중복 제출 방지 해시 비교
 - [ ] 반응형 API 문서 제공 (Swagger)
 
