@@ -25,7 +25,7 @@ exports.groupDetail = async (req, res) => {
     })
 
     if(!group){
-      return res.status(404).json({ message: "그룹을 찾을 수 없습니다." });
+      return res.status(404).json({ error: "그룹을 찾을 수 없습니다." });
     }
 
     res.status(200).json({ group, schedule });
@@ -55,7 +55,7 @@ exports.createGroup = async (req, res) => {
     
     const leader_id = req.user && req.user.id;
     if(!leader_id){
-      return res.status(401).json({ message: "로그인이 필요합니다." });
+      return res.status(401).json({ error: "로그인이 필요합니다." });
     }
 
     const thumbnail = req.body.thumbnail || '';
@@ -89,7 +89,7 @@ exports.createGroup = async (req, res) => {
     res.status(201).json({ message: "그룹 생성", group: newGroup});
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "서버 에러"});
+    res.status(500).json({ error: "서버 에러"});
   }
 };
 
