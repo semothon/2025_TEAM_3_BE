@@ -15,7 +15,7 @@ exports.createRecords = async (req,res) => {
         return res.status(401).json({ message: "로그인이 필요합니다." });
       }
 
-      const file_url = req.body.file_url || '';
+      const file_url = req.body.file_url || {};
 
       const newRecord = await Records.create({
         group_id,
